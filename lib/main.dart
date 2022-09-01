@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 import 'ui.dart';
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
 void main() => runApp(const MyApp());
 
@@ -47,21 +49,19 @@ class _FilmyZillaState extends State<FilmyZilla> {
         showLogs: true,
       ),
     );
-    Map trendingMoviesList = await tmdbCustomLogs.v3.trending.getTrending(
-        mediaType: MediaType.movie, timeWindow: TimeWindow.day, language: 'hi');
+    Map trendingMoviesList = await tmdbCustomLogs.v3.trending
+        .getTrending(mediaType: MediaType.movie, timeWindow: TimeWindow.day);
     // print(trendingMoviesList);
     // Map trendingTVShowsList =
     //     await tmdbCustomLogs.v3.tv.getPopular(language: 'hi');
 
-    Map trendingTVShowsList =
-        await tmdbCustomLogs.v3.tv.getPopular(language: 'hi');
+    Map trendingTVShowsList = await tmdbCustomLogs.v3.tv.getPopular();
 
     Map topRatedMoviesList = await tmdbCustomLogs.v3.movies
-        .getTopRated(language: 'hi', region: 'in');
+        .getTopRated(language: 'en', region: 'in');
 
     // Map recommendedMoviesList = await tmdbCustomLogs.v3.movies.getLatest();
-    Map recommendedMoviesList = await tmdbCustomLogs.v3.discover
-        .getMovies(language: 'hi', region: 'in');
+    Map recommendedMoviesList = await tmdbCustomLogs.v3.discover.getMovies();
 
     setState(() {
       trendingMovies = trendingMoviesList['results'];
@@ -77,26 +77,88 @@ class _FilmyZillaState extends State<FilmyZilla> {
     print(recommendedMoviesList);
   }
 
+  var _bottomNavIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Filmyzilla',
-          // style: TextStyle(
-          //   fontWeight: FontWeight.bold,
-          //   fontStyle: FontStyle.italic,
-          //   fontFamily: GoogleFonts.acme(),
-          // ),
-          style: GoogleFonts.acme(),
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.bottomLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color.fromARGB(108, 26, 26, 90),
+            // Color(0x00070d2d),
+            Color(0x00252443),
+          ],
         ),
-        centerTitle: true,
       ),
-      body: HomePageUI(
-        trendingMovies,
-        trendingTVShows,
-        topRatedMovies,
-        recommendedMovies,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: Text(
+            'Hi, MOHIL!',
+            style: GoogleFonts.acme(fontSize: 28),
+          ),
+          actions: [
+            Container(
+              padding: const EdgeInsets.only(right: 30),
+              child: Image.asset('assets/Mohil_Bansal.png'),
+            )
+          ],
+        ),
+        body: HomePageUI(
+          trendingMovies,
+          trendingTVShows,
+          topRatedMovies,
+          recommendedMovies,
+        ),
+        // bottomNavigationBar: AnimatedBottomNavigationBar(
+        //   icons: const [
+        //     FontAwesomeIcons.house,
+        //     FontAwesomeIcons.magnifyingGlass,
+        //     FontAwesomeIcons.glasses,
+        //     Icons.account_circle,
+        //   ],
+        //   activeColor: Colors.amber,
+        //   activeIndex: _bottomNavIndex,
+
+        //   notchSmoothness: NotchSmoothness.softEdge,
+        //   onTap: (index) => setState(() => _bottomNavIndex = index),
+        // ),
+        bottomNavigationBar: BottomNavyBar(
+            selectedIndex: _bottomNavIndex,
+            backgroundColor: const Color(0x00252443),
+            animationDuration: const Duration(milliseconds: 400),
+            curve: Curves.easeInOutCirc,
+            containerHeight: 70,
+            showElevation: true,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            items: [
+              BottomNavyBarItem(
+                  icon: const FaIcon(FontAwesomeIcons.house),
+                  title: const Text('    Home'),
+                  activeColor: Colors.amber,
+                  inactiveColor: Colors.grey),
+              BottomNavyBarItem(
+                  icon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
+                  title: const Text('    Search '),
+                  activeColor: Colors.red,
+                  inactiveColor: Colors.grey),
+              BottomNavyBarItem(
+                  icon: const FaIcon(FontAwesomeIcons.ticket),
+                  title: const Text('     Coming Soon'),
+                  activeColor: Colors.blue,
+                  inactiveColor: Colors.grey),
+              BottomNavyBarItem(
+                  icon: const FaIcon(FontAwesomeIcons.userAstronaut),
+                  title: const Text('    Account'),
+                  activeColor: Colors.green,
+                  inactiveColor: Colors.grey),
+            ],
+            onItemSelected: (index) => setState(() {
+                  _bottomNavIndex = index;
+                })),
       ),
     );
   }

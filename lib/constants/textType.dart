@@ -13,7 +13,7 @@ class TextUI extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: GoogleFonts.breeSerif(
+      style: GoogleFonts.poppins(
         decoration: TextDecoration.none,
         color: color,
         fontSize: fontSize,
