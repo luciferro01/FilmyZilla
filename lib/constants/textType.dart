@@ -14,6 +14,7 @@ class TextUI extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.breeSerif(
+        decoration: TextDecoration.none,
         color: color,
         fontSize: fontSize,
       ),

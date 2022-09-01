@@ -31,6 +31,7 @@ class _FilmyZillaState extends State<FilmyZilla> {
   List trendingMovies = [];
   List trendingTVShows = [];
   List topRatedMovies = [];
+  List recommendedMovies = [];
 
   @override
   void initState() {
@@ -46,23 +47,34 @@ class _FilmyZillaState extends State<FilmyZilla> {
         showLogs: true,
       ),
     );
-    Map trendingMoviesList = await tmdbCustomLogs.v3.trending
-        .getTrending(mediaType: MediaType.movie, timeWindow: TimeWindow.day);
+    Map trendingMoviesList = await tmdbCustomLogs.v3.trending.getTrending(
+        mediaType: MediaType.movie, timeWindow: TimeWindow.day, language: 'hi');
     // print(trendingMoviesList);
-    Map trendingTVShowsList = await tmdbCustomLogs.v3.tv.getPopular();
+    // Map trendingTVShowsList =
+    //     await tmdbCustomLogs.v3.tv.getPopular(language: 'hi');
+
+    Map trendingTVShowsList =
+        await tmdbCustomLogs.v3.tv.getPopular(language: 'hi');
 
     Map topRatedMoviesList = await tmdbCustomLogs.v3.movies
         .getTopRated(language: 'hi', region: 'in');
+
+    // Map recommendedMoviesList = await tmdbCustomLogs.v3.movies.getLatest();
+    Map recommendedMoviesList = await tmdbCustomLogs.v3.discover
+        .getMovies(language: 'hi', region: 'in');
 
     setState(() {
       trendingMovies = trendingMoviesList['results'];
       trendingTVShows = trendingTVShowsList['results'];
       topRatedMovies = topRatedMoviesList['results'];
+      recommendedMovies = recommendedMoviesList['results'];
     });
 
-    print(trendingMovies);
+    // print(trendingMovies);
     print(trendingTVShows);
     print(topRatedMovies);
+    print(recommendedMovies);
+    print(recommendedMoviesList);
   }
 
   @override
@@ -80,7 +92,12 @@ class _FilmyZillaState extends State<FilmyZilla> {
         ),
         centerTitle: true,
       ),
-      body: HomePageUI(trendingMovies, trendingTVShows, topRatedMovies),
+      body: HomePageUI(
+        trendingMovies,
+        trendingTVShows,
+        topRatedMovies,
+        recommendedMovies,
+      ),
     );
   }
 }

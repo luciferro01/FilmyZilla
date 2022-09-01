@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'constants/textType.dart';
+import 'description.dart';
 
 class HeadingUI extends StatelessWidget {
   const HeadingUI({
@@ -31,25 +32,57 @@ class HeadingUI extends StatelessWidget {
             itemCount: trending.length,
             itemBuilder: ((context, index) {
               return InkWell(
-                onTap: (() {}),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: ((context) => Description(
+                            trending[index]['title'] == null
+                                ? trending[index]['original_name']
+                                : trending[index]['title'],
+                            trending[index]['overview'] == null
+                                ? 'Not Available'
+                                : trending[index]['overview'],
+                            'https://tmdb.org/t/p/w400/' +
+                                trending[index]['backdrop_path'],
+                            trending[index]['release_date'] == null
+                                ? trending[index]['first_air_date']
+                                : trending[index]['release_date'],
+                            'https://tmdb.org/t/p/w400/' +
+                                trending[index]['poster_path'],
+                            trending[index]['vote_average'].toString(),
+                          )),
+                    ),
+                  );
+                },
                 child: Container(
                   child: Column(
                     children: [
                       Container(
                         height: MediaQuery.of(context).size.height * 0.2,
+                        width: 200,
                         margin: const EdgeInsets.only(
                           left: 4,
                           right: 4,
                         ),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(
+                        decoration: BoxDecoration(
+                          color: Colors.amber,
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              'https://tmdb.org/t/p/w400/' +
+                                  trending[index]['poster_path'],
+                              scale: 2,
+                            ),
+                            fit: BoxFit.fill,
+                          ),
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(20),
                           ),
                         ),
-                        child: Image.network(
-                          'https://image.tmdb.org/t/p/w400' +
-                              trending[index]['poster_path'],
-                        ),
+                        // child: Image.network(
+                        //   'https://image.tmdb.org/t/p/w400' +
+                        //       trending[index]['poster_path'],
+                        // ),
                       ),
                     ],
                   ),
