@@ -17,6 +17,7 @@ class TextUI extends StatelessWidget {
         decoration: TextDecoration.none,
         color: color,
         fontSize: fontSize,
+        fontWeight: FontWeight.bold,
       ),
     );
   }
