@@ -6,15 +6,17 @@ import 'dart:convert';
 const String apiKey = 'fb1bf72f316f1126ca9f4258076532c7';
 const String accessToken =
     'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYjFiZjcyZjMxNmYxMTI2Y2E5ZjQyNTgwNzY1MzJjNyIsInN1YiI6IjYzMGY0ZDIwY2I4MDI4MDA5NGZiMDRhZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.dRKPDbdlM1dRovAqCO1RdgC5RMj6VAu5Shk8UOUw_YI';
-const String tmdbUrl = 'https://api.themoviedb.org/3/movie/550?api_key=$apiKey';
+const String tmdbUrl =
+    'https://api.themoviedb.org/3/search/multi?api_key=$apiKey&query=Game+of+thrones';
 
 class ComingSoon extends StatelessWidget {
   Future getDetails() async {
     var response = await http.get(Uri.parse(tmdbUrl));
     String data = response.body;
     var decodeData = jsonDecode(data);
-    print(response.body);
+    // print(response.body);
     print(decodeData);
+    // print(decodeData['genres'][0]['name']);
     // return decodeData;
     // Response response = await http.get(tmdb_api_url);
     // const data = await response.json();
