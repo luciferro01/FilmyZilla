@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'search_multi.dart';
 
 const String apiKey = 'fb1bf72f316f1126ca9f4258076532c7';
 const String accessToken =
     'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYjFiZjcyZjMxNmYxMTI2Y2E5ZjQyNTgwNzY1MzJjNyIsInN1YiI6IjYzMGY0ZDIwY2I4MDI4MDA5NGZiMDRhZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.dRKPDbdlM1dRovAqCO1RdgC5RMj6VAu5Shk8UOUw_YI';
+
+late String data;
 
 class SearchUI extends StatelessWidget {
   var data;
@@ -13,7 +16,7 @@ class SearchUI extends StatelessWidget {
     String tmdbUrl =
         'https://api.themoviedb.org/3/search/multi?api_key=$apiKey&query=$searchText';
     var response = await http.get(Uri.parse(tmdbUrl));
-    String data = response.body;
+    data = response.body;
     var decodeData = jsonDecode(data);
     // print(response.body);
     print(decodeData);
@@ -64,15 +67,18 @@ class SearchUI extends StatelessWidget {
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
           ),
         ),
-        data == null
-            ? Text('Null')
-            : ListView.builder(
-                itemCount: data.length,
-                itemBuilder: ((context, index) {
-                  return Container(
-                    child: data['index']['name'],
-                  );
-                }))
+        //
+        ListView.builder(
+          itemCount: data.length,
+          itemBuilder: ((context, index) {
+            return Container(
+                // child: data['index']['name'],
+                // child: Text(
+                //   data['index']['name'],
+                // ),
+                );
+          }),
+        )
       ],
     );
   }
