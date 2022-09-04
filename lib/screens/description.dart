@@ -75,14 +75,20 @@
 // import 'package:filmyzilla/constants/textType.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'constants/clip_container.dart';
-import 'constants/title_heading.dart';
+import '../widgets/clip_container.dart';
+import '../widgets/title_heading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Description extends StatelessWidget {
-  final String name, description, bannerUrl, posterUrl, vote, launchOn;
+  final String name,
+      description,
+      bannerUrl,
+      posterUrl,
+      vote,
+      launchOn,
+      heroImage;
   const Description(this.name, this.description, this.bannerUrl, this.launchOn,
-      this.posterUrl, this.vote,
+      this.posterUrl, this.vote, this.heroImage,
       {Key? key})
       : super(key: key);
 
@@ -133,32 +139,35 @@ class Description extends StatelessWidget {
             Stack(
               children: [
                 Positioned(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.6,
-                    margin: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.08,
-                      right: MediaQuery.of(context).size.width * 0.08,
-                      bottom: MediaQuery.of(context).size.width * 0.08,
-                      // 40,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color.fromARGB(255, 120, 155, 187),
-                          offset: Offset(30.0, 30.0), //(x,y)
-                          blurRadius: 6.0,
-                          blurStyle: BlurStyle.inner,
+                  child: Hero(
+                    tag: heroImage,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.08,
+                        right: MediaQuery.of(context).size.width * 0.08,
+                        bottom: MediaQuery.of(context).size.width * 0.08,
+                        // 40,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 120, 155, 187),
+                            offset: Offset(30.0, 30.0), //(x,y)
+                            blurRadius: 6.0,
+                            blurStyle: BlurStyle.inner,
+                          ),
+                          BoxShadow(
+                            color: Color.fromARGB(255, 48, 75, 101),
+                            offset: Offset(20.0, 20.0), //(x,y)
+                            // blurRadius: 6.0,
+                          ),
+                        ],
+                        image: DecorationImage(
+                          image: NetworkImage(posterUrl),
+                          fit: BoxFit.fill,
                         ),
-                        BoxShadow(
-                          color: Color.fromARGB(255, 48, 75, 101),
-                          offset: Offset(20.0, 20.0), //(x,y)
-                          // blurRadius: 6.0,
-                        ),
-                      ],
-                      image: DecorationImage(
-                        image: NetworkImage(posterUrl),
-                        fit: BoxFit.fill,
                       ),
                     ),
                   ),

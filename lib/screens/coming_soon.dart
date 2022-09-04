@@ -10,6 +10,8 @@ const String tmdbUrl =
     'https://api.themoviedb.org/3/search/multi?api_key=$apiKey&query=Game+of+thrones';
 
 class ComingSoon extends StatelessWidget {
+  const ComingSoon({Key? key}) : super(key: key);
+
   Future getDetails() async {
     var response = await http.get(Uri.parse(tmdbUrl));
     String data = response.body;

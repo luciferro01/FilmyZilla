@@ -1,18 +1,20 @@
-import 'package:filmyzilla/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tmdb_api/tmdb_api.dart';
+import 'widgets/headings_ui.dart';
 
-class primaryUI extends StatefulWidget {
+class HomePageUI extends StatefulWidget {
+  const HomePageUI({Key? key}) : super(key: key);
+
   @override
-  State<primaryUI> createState() => _primaryUIState();
+  State<HomePageUI> createState() => _HomePageUIState();
 }
 
 const String apiKey = 'fb1bf72f316f1126ca9f4258076532c7';
 const String accessToken =
     'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYjFiZjcyZjMxNmYxMTI2Y2E5ZjQyNTgwNzY1MzJjNyIsInN1YiI6IjYzMGY0ZDIwY2I4MDI4MDA5NGZiMDRhZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.dRKPDbdlM1dRovAqCO1RdgC5RMj6VAu5Shk8UOUw_YI';
 
-class _primaryUIState extends State<primaryUI> {
+class _HomePageUIState extends State<HomePageUI> {
   List trendingMovies = [];
   List trendingTVShows = [];
   List topRatedMovies = [];
@@ -53,22 +55,23 @@ class _primaryUIState extends State<primaryUI> {
       region: 'in',
       language: 'en',
     );
+    // Map upcomingMoviesList = await tmdbCustomLogs.v3.discover.getMovies(
+    //   withOrginalLanguage: 'hi',
+    //   language: 'en',
+    //   region: 'in',
+    //   primaryReleaseDateGreaterThan: DateTime(2022).toString(),
+    // );
 
-    setState(() {
-      trendingMovies = trendingMoviesList['results'];
-      trendingTVShows = trendingTVShowsList['results'];
-      topRatedMovies = topRatedMoviesList['results'];
-      recommendedMovies = recommendedMoviesList['results'];
-      bollywoodMovies = bollywoodMoviesList['results'];
-      upcomingMovies = upcomingMoviesList['results'];
-    });
-
-    // print(trendingMovies);
-    // print(trendingTVShows);
-    // print(topRatedMovies);
-    // print(recommendedMovies);
-    // print(recommendedMoviesList);
-    // print(bollywoodMovies);
+    if (mounted) {
+      setState(() {
+        trendingMovies = trendingMoviesList['results'];
+        trendingTVShows = trendingTVShowsList['results'];
+        topRatedMovies = topRatedMoviesList['results'];
+        recommendedMovies = recommendedMoviesList['results'];
+        bollywoodMovies = bollywoodMoviesList['results'];
+        upcomingMovies = upcomingMoviesList['results'];
+      });
+    }
     print(upcomingMovies);
   }
 
@@ -88,8 +91,17 @@ class _primaryUIState extends State<primaryUI> {
           )
         ],
       ),
-      body: HomePageUI(trendingMovies, trendingTVShows, topRatedMovies,
-          recommendedMovies, bollywoodMovies, upcomingMovies),
+      body: ListView(
+        children: [
+          HeadingUI(recommendedMovies, 'Recommendations'),
+          HeadingUI(trendingMovies, 'Trending Movies'),
+          HeadingUI(trendingTVShows, 'Trending TV Shows'),
+          HeadingUI(topRatedMovies, 'Top Rated Movies'),
+          // HeadingUI(topRatedMovies, 'Top Rated Movies'),
+          HeadingUI(bollywoodMovies, 'Bollywood Movies'),
+          HeadingUI(upcomingMovies, 'Upcoming  Movies'),
+        ],
+      ),
     );
   }
 }

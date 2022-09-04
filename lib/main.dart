@@ -1,13 +1,10 @@
-import 'package:filmyzilla/primaryUI.dart';
 import 'package:flutter/material.dart';
+import 'home_page_ui.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:tmdb_api/tmdb_api.dart';
-import 'ui.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'coming_soon.dart';
-import 'account.dart';
-import 'search.dart';
+import 'screens/coming_soon.dart';
+import 'screens/account.dart';
+import 'screens/search.dart';
 
 void main() => runApp(const MyApp());
 
@@ -19,22 +16,24 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(),
-      home: FilmyZilla(),
+      home: const FilmyZilla(),
     );
   }
 }
 
 class FilmyZilla extends StatefulWidget {
+  const FilmyZilla({Key? key}) : super(key: key);
+
   @override
   State<FilmyZilla> createState() => _FilmyZillaState();
 }
 
 class _FilmyZillaState extends State<FilmyZilla> {
   List bodyList = [
-    primaryUI(),
-    SearchUI(),
-    ComingSoon(),
-    AccountUI(),
+    const HomePageUI(),
+    const SearchUI(),
+    const ComingSoon(),
+    const AccountUI(),
   ];
 
   var _bottomNavIndex = 0;
